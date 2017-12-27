@@ -9,7 +9,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
-import devToolsEnhancer from 'remote-redux-devtools';
+
 
 const Tabs = TabNavigator(
   {
@@ -56,7 +56,13 @@ const MainNavigator = StackNavigator({
   }
 });
 
-const store = createStore(reducer, devToolsEnhancer());
+const store = createStore(
+  reducer,
+  compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
+);
 
 export default class App extends React.Component {
   render() {
