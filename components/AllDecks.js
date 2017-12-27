@@ -4,7 +4,7 @@ import { View, StyleSheet, Text } from "react-native";
 class AllDecks extends Component {
   render() {
     return (
-      <View>
+      <View style={styles.AllDecks}>
         <Text>ALL Decks</Text>
       </View>
     );
@@ -13,7 +13,9 @@ class AllDecks extends Component {
 
 const styles = StyleSheet.create({
   AllDecks: {
-    marginTop: 10
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 
