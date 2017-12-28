@@ -5,7 +5,8 @@ import Deck from "./components/Deck";
 import { TabNavigator, StackNavigator } from "react-navigation";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { purple, white, blue } from "./utils/colors";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore } from "redux";
+import devToolsEnhancer from 'remote-redux-devtools';
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
@@ -33,10 +34,12 @@ const Tabs = TabNavigator(
     tabBarOptions: {
       activeTintColor: Platform.OS === "ios" ? purple : white,
       labelStyle: {
-        fontSize: 12
+        fontSize: 20,
+        fontWeight:'bold'
       },
       style: {
         height: 56,
+        paddingBottom: 15,
         backgroundColor: Platform.OS === "ios" ? white : purple,
         shadowColor: "rgba(0, 0, 0, 0.24)",
         shadowOffset: {
@@ -56,13 +59,7 @@ const MainNavigator = StackNavigator({
   }
 });
 
-const store = createStore(
-  reducer,
-  compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-);
+const store = createStore(reducer, devToolsEnhancer());
 
 export default class App extends React.Component {
   render() {
