@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View, Platform } from "react-native";
 import AllDecks from "./components/AllDecks";
-import Deck from "./components/Deck";
+import AddDeck from "./components/AddDeck";
 import { TabNavigator, StackNavigator } from "react-navigation";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { purple, white, blue } from "./utils/colors";
+import { black, white, blue } from "./utils/colors";
 import { createStore } from "redux";
 import devToolsEnhancer from 'remote-redux-devtools';
 import thunk from "redux-thunk";
@@ -20,10 +20,10 @@ const Tabs = TabNavigator(
         tabBarLabel: "All Decks"
       }
     },
-    Deck: {
-      screen: Deck,
+    AddDeck: {
+      screen: AddDeck,
       navigationOptions: {
-        tabBarLabel: "Deck"
+        tabBarLabel: "New Deck"
       }
     }
   },
@@ -32,7 +32,7 @@ const Tabs = TabNavigator(
       header: null
     },
     tabBarOptions: {
-      activeTintColor: Platform.OS === "ios" ? purple : white,
+      activeTintColor: Platform.OS === "ios" ? black : white,
       labelStyle: {
         fontSize: 20,
         fontWeight:'bold'
@@ -40,7 +40,7 @@ const Tabs = TabNavigator(
       style: {
         height: 56,
         paddingBottom: 15,
-        backgroundColor: Platform.OS === "ios" ? white : purple,
+        backgroundColor: Platform.OS === "ios" ? white : black,
         shadowColor: "rgba(0, 0, 0, 0.24)",
         shadowOffset: {
           width: 0,
@@ -56,6 +56,15 @@ const Tabs = TabNavigator(
 const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs
+  },
+  AddDeck: {
+    screen: AddDeck,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: black,
+      }
+    }
   }
 });
 

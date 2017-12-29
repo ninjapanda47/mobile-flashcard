@@ -1,9 +1,22 @@
 import React, { Component } from "react";
 import { View, ScrollView, StyleSheet, Text } from "react-native";
-import { white, purple, gray, black, pink } from '../utils/colors';
+import { white, gray, black } from '../utils/colors';
+import { getDecks } from '../utils/helpers'
 import { connect } from 'react-redux';
 
 class AllDecks extends Component {
+
+  state = {
+    results: {}
+  }
+
+  componentDidMount () {
+    getDecks().then((decks) => {
+      console.log(decks)
+    })
+
+  }
+
   render() {
     return (
       <ScrollView contentContainerStyle={styles.allDecks}>
@@ -48,7 +61,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps ({decks}) {
+function mapStateToProps (decks) {
     return {
         decks
     }
