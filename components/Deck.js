@@ -23,15 +23,19 @@ function AddBtn ({ onPress }) {
   }
 
 class Deck extends Component {
-
     render() {
       return (
         <View style={styles.single}>
         <View style={styles.deck}>
-          <Text style={styles.title}>Title</Text>
-          <Text style={styles.desc}>cards</Text>
-          <AddBtn/>
-          <StartBtn/>
+          <Text style={styles.title}>{this.props.navigation.state.params.title}</Text>
+          <Text style={styles.desc}>{this.props.navigation.state.params.quantity} cards</Text>
+          <AddBtn onPress={() => this.props.navigation.navigate(
+          'AddCard',
+          { title: this.props.navigation.state.params.title}
+        )}/>
+          <StartBtn onPress={() => this.props.navigation.navigate(
+          'Quiz'
+        )}/>
         </View>
         </View>
       );

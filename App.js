@@ -2,6 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View, Platform } from "react-native";
 import AllDecks from "./components/AllDecks";
 import AddDeck from "./components/AddDeck";
+import AddCard from "./components/AddCard";
+import Deck from "./components/Deck";
+import Quiz from "./components/Quiz";
 import { TabNavigator, StackNavigator } from "react-navigation";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { black, white, blue } from "./utils/colors";
@@ -55,11 +58,33 @@ const Tabs = TabNavigator(
 
 const MainNavigator = StackNavigator({
   Home: {
-    screen: Tabs
-  },
-  AddDeck: {
-    screen: AddDeck,
+    screen: Tabs,
     navigationOptions: {
+    }
+  },
+  Deck: {
+    screen: Deck,
+    navigationOptions: {
+      title: 'Deck',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: black,
+      }
+    }
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: black,
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: black,

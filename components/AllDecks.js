@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import { View, ScrollView, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { white, gray, black } from '../utils/colors';
 import { getDecks } from '../utils/helpers'
 import { connect } from 'react-redux';
@@ -7,23 +7,37 @@ import { connect } from 'react-redux';
 class AllDecks extends Component {
 
   state = {
-    results: {}
+    results: [],
+    length: 0
   }
 
   componentDidMount () {
     getDecks().then((decks) => {
-      console.log(decks)
+      this.setState({ results: decks})
+      console.log(this.state)
     })
 
   }
 
   render() {
+
+    const { results } = this.state
+
     return (
       <ScrollView contentContainerStyle={styles.allDecks}>
-        <View style={styles.deckDisplay}>
-          <Text style={styles.title}>Title</Text>
-          <Text style={styles.desc}>cards</Text>
-        </View>
+      {results.map(deck => (
+        <TouchableOpacity key={deck.title}
+        onPress={() => this.props.navigation.navigate(
+          'Deck',
+          { title: deck.title, quantity: deck.questions.length}
+        )} >
+                <View style={styles.deckDisplay}>
+                <Text style={styles.title}>{deck.title}</Text>
+                <Text style={styles.desc}>{deck.questions.length} cards</Text>
+              </View>
+        </TouchableOpacity>
+      ))
+      }
       </ScrollView>
     );
   }

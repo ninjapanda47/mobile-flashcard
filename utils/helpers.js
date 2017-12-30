@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, StyleSheet, AsyncStorage } from 'react-native'
-import { deckResults, DECKS_STORAGE_KEY } from './deckResults'
+import { setDummyData, DECKS_STORAGE_KEY } from './deckResults'
 
 //getDecks: return all of the decks along with their titles, questions, and answers. 
 export function getDecks(){
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
-    .then(deckResults)
-    console.log(deckResults)
+    .then(setDummyData)
+    console.log(setDummyData)
 }
 
 
