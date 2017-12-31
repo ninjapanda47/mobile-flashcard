@@ -1,44 +1,52 @@
 import React, { Component } from "react";
-import { View, ScrollView, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, FlatList } from "react-native";
 import { white, gray, black } from '../utils/colors';
 import { getDecks } from '../utils/helpers'
 import { connect } from 'react-redux';
+import { receiveDecks } from '../actions';
+
+function Deck (deck, navigation) {
+  return (
+    <TouchableOpacity key={deck.title}
+    onPress={() => this.props.navigation.navigate(
+      'Deck',
+      { title: deck.title, quantity: deck.questions.length}
+    )} >
+            <View style={styles.deckDisplay}>
+            <Text style={styles.title}>{deck.title}</Text>
+            <Text style={styles.desc}>{deck.questions.length} cards</Text>
+          </View>
+    </TouchableOpacity>
+  )
+
+}
 
 class AllDecks extends Component {
 
   state = {
-    results: [],
-    length: 0
+
   }
 
   componentDidMount () {
-    getDecks().then((decks) => {
-      this.setState({ results: decks})
-      console.log(this.state)
-    })
-
+    const { dispatch } = this.props
+    getDecks().then((decks) => dispatch(receiveDecks(decks),console.log(this.props.decks)))  
   }
 
   render() {
 
-    const { results } = this.state
+    const { decks } = this.props
+    console.log(this.props.decks)
 
     return (
-      <ScrollView contentContainerStyle={styles.allDecks}>
-      {results.map(deck => (
-        <TouchableOpacity key={deck.title}
-        onPress={() => this.props.navigation.navigate(
-          'Deck',
-          { title: deck.title, quantity: deck.questions.length}
-        )} >
-                <View style={styles.deckDisplay}>
-                <Text style={styles.title}>{deck.title}</Text>
-                <Text style={styles.desc}>{deck.questions.length} cards</Text>
-              </View>
-        </TouchableOpacity>
-      ))
-      }
-      </ScrollView>
+      <View style={styles.allDecks}>
+        {
+          decks &&
+          <FlatList
+          data={decks}
+          renderItem={({item}) =><Deck deck={item}></Deck>}
+          />
+        }
+      </View>
     );
   }
 }

@@ -1,23 +1,23 @@
-export const GETALL = "GETALL";
+import { setDummyData, DECKS_STORAGE_KEY } from '../utils/deckResults'
 export const RECEIVE_DECKS = "RECEIVE_DECKS";
 export const ADD_DECK = "ADD_DECK";
 export const ADD_CARD = "ADD_CARD";
 
-function getall() {
-  return {
-    type: GETALL,
-    decks
-  };
+export function receiveDecks(decks){
+    return {
+        type: RECEIVE_DECKS,
+        decks
+    }
 }
 
-function addDeck(title) {
+export function addDeck(title) {
     return {
         type: ADD_DECK,
         title
     }
 }
 
-function addCard(title,card) {
+export function addCard(title,card) {
     return {
         type: ADD_CARD,
         title,

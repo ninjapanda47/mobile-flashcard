@@ -34,3 +34,7 @@ export function setDummyData () {
   AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(dummyData))
   return dummyData
 }
+
+export function deckResults (results){
+   return setDummyData()
+}
