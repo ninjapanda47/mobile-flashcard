@@ -14,10 +14,7 @@ function decks(state = [], action) {
         ...state
       };
     case RECEIVE_DECKS: {
-      return {
-        ...state,
-        ...action.decks
-      }
+      return [...action.decks];
     }
 
     default:

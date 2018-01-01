@@ -1,25 +1,11 @@
 import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, FlatList } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from "react-native";
 import { white, gray, black } from '../utils/colors';
 import { getDecks } from '../utils/helpers'
 import { connect } from 'react-redux';
 import { receiveDecks } from '../actions';
 
-function Deck (deck, navigation) {
-  return (
-    <TouchableOpacity key={deck.title}
-    onPress={() => this.props.navigation.navigate(
-      'Deck',
-      { title: deck.title, quantity: deck.questions.length}
-    )} >
-            <View style={styles.deckDisplay}>
-            <Text style={styles.title}>{deck.title}</Text>
-            <Text style={styles.desc}>{deck.questions.length} cards</Text>
-          </View>
-    </TouchableOpacity>
-  )
 
-}
 
 class AllDecks extends Component {
 
@@ -29,24 +15,29 @@ class AllDecks extends Component {
 
   componentDidMount () {
     const { dispatch } = this.props
-    getDecks().then((decks) => dispatch(receiveDecks(decks),console.log(this.props.decks)))  
+    getDecks().then((result) => dispatch(receiveDecks(result)))  
   }
 
   render() {
 
     const { decks } = this.props
-    console.log(this.props.decks)
 
     return (
-      <View style={styles.allDecks}>
-        {
-          decks &&
-          <FlatList
-          data={decks}
-          renderItem={({item}) =><Deck deck={item}></Deck>}
-          />
-        }
-      </View>
+      <ScrollView contentContainerStyle={styles.allDecks}>
+      {decks.map(deck => (
+        <TouchableOpacity key={deck.title}
+        onPress={() => this.props.navigation.navigate(
+          'Deck',
+          { title: deck.title, quantity: deck.questions.length}
+        )} >
+                <View style={styles.deckDisplay}>
+                <Text style={styles.title}>{deck.title}</Text>
+                <Text style={styles.desc}>{deck.questions.length} cards</Text>
+              </View>
+        </TouchableOpacity>
+      ))
+      }
+      </ScrollView>
     );
   }
 }
