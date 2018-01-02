@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { white, red, green, gray, black } from "../utils/colors";
+import { connect } from 'react-redux';
+import { getDeck } from '../utils/helpers'
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; 
+  }
 
 function Correct({ onPress }) {
   return (
@@ -18,17 +26,55 @@ function Incorrect({ onPress }) {
   );
 }
 
-class Quiz extends Component {
-  render() {
+function Answer({ onPress }) {
     return (
-      <View style={styles.single}>
+      <TouchableOpacity onPress={onPress}>
+        <Text style={styles.answer}>Answer</Text>
+      </TouchableOpacity>
+    );
+  }
+
+class Quiz extends Component {
+
+    state = {
+        seeAnswer: false
+
+    }
+
+    ShowandHideAnswer = () =>{
+        if(this.state.status == true)
+        {
+          this.setState({status: false})
+        }
+        else
+        {
+          this.setState({status: true})
+        }
+      }
+
+    componentDidMount () {
+        const { dispatch } = this.props
+     
+      }
+
+  render() {
+
+    const decks = this.props.decks
+    const title = this.props.navigation.state.params.title
+    const deck = getDeck(title,decks)
+    const length = deck[0].questions.length
+    let random = getRandomInt(0, length) 
+
+    return (
+      <View style={styles.single}> 
         <View style={styles.deck}>
-          <Text style={styles.question}>
-            What is the name of my dog?
+         {this.state.seeAnswer ? <Text style={styles.question}>
+            {deck[0].questions[random].question} 
+          </Text> :<Text style={styles.question}>
+            {deck[0].questions[random].answer} 
           </Text>
-          <Text style={styles.answer}>
-            Answer
-          </Text>
+         }                      
+          <Answer onPress={this.ShowandHideAnswer}/>
           <Correct/>
           <Incorrect />
         </View>
@@ -54,7 +100,7 @@ const styles = StyleSheet.create({
   question: {
     fontSize: 25,
     fontWeight: "bold",
-    width: 200,
+    width: 300,
     color: black,
     textAlign: "center",
     marginBottom: 20
@@ -62,7 +108,8 @@ const styles = StyleSheet.create({
   answer: {
     fontSize: 20,
     color: gray,
-    textAlign: "justify"
+    width: 300,
+    textAlign: "center"
   },
   correct: {
     backgroundColor: green,
@@ -96,4 +143,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Quiz;
+function mapStateToProps (decks) {
+    return {
+        decks
+    }
+}
+
+export default connect(mapStateToProps)(Quiz);
+

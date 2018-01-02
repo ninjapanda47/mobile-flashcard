@@ -9,8 +9,11 @@ export function getDecks(){
 }
 
 //getDeck: take in a single id argument and return the deck associated with that id. 
-export function getDeck(title){
-    
+export function getDeck( title, decks){
+    let deck = decks.filter(function(obj){
+        return obj.title === title;
+    })
+    return deck
 }
 
 //saveDeckTitle: take in a single title argument and add it to the decks. 

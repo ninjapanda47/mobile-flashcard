@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { white, lightblue, green, gray, black } from '../utils/colors';
+import { connect } from 'react-redux';
 
 function AddBtn ({ onPress }) {
     return (
@@ -23,7 +24,12 @@ function AddBtn ({ onPress }) {
   }
 
 class Deck extends Component {
+  
     render() {
+
+      const { decks } = this.props
+      console.log(decks)
+
       return (
         <View style={styles.single}>
         <View style={styles.deck}>
@@ -34,7 +40,8 @@ class Deck extends Component {
           { title: this.props.navigation.state.params.title}
         )}/>
           <StartBtn onPress={() => this.props.navigation.navigate(
-          'Quiz'
+          'Quiz', 
+          { title: this.props.navigation.state.params.title}
         )}/>
         </View>
         </View>
@@ -93,6 +100,12 @@ class Deck extends Component {
         textAlign: 'center',
       },
   });
-  
-  export default Deck;
+
+  function mapStateToProps (decks) {
+    return {
+        decks
+    }
+}
+
+  export default connect(mapStateToProps)(Deck);
   
