@@ -7,6 +7,8 @@ import {
   TextInput
 } from "react-native";
 import { white, lightblue, green, gray, black } from "../utils/colors";
+import { saveDeckTitle } from '../utils/helpers'
+import { connect } from "react-redux";
 
 function SubmitBtn({ onPress }) {
   return (
@@ -21,7 +23,12 @@ class AddDeck extends Component {
     text: ""
   };
 
+  AddDeck = () => {
+      saveDeckTitle(this.props.decks,this.state.text)
+  }
+
   render() {
+
     return (
       <View style={styles.single}>
         <View style={styles.deck}>
@@ -33,7 +40,7 @@ class AddDeck extends Component {
             maxLength={40}
             onChangeText={text => this.setState({ text })}
           />
-          <SubmitBtn />
+          <SubmitBtn onPress={this.AddDeck}/>
         </View>
       </View>
     );
@@ -90,4 +97,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddDeck;
+function mapStateToProps(decks) {
+    return {
+      decks
+    };
+  }
+  
+export default connect(mapStateToProps)(AddDeck);
+
+

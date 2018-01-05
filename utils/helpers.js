@@ -17,6 +17,14 @@ export function getDeck( title, decks){
 }
 
 //saveDeckTitle: take in a single title argument and add it to the decks. 
+export function saveDeckTitle(decks,title){
+    const deck = {questions:[]}
+    deck.title = title
+    decks.push(deck)
+    AsyncStorage.setItem(DECKS_STORAGE_KEY,JSON.stringify(decks))
+    .then((data) =>  AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then((data) => console.log(data)))    
+}
 //addCardToDeck: take in two arguments, title and card, and will add the card to the list of questions for the
 
 

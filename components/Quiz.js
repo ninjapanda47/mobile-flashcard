@@ -30,7 +30,8 @@ class Quiz extends Component {
   state = {
     seeAnswer: false,
     count: 0,
-    correct: 0
+    correct: 0,
+    random: 0
   };
 
   ShowandHideAnswer = () => {
@@ -53,13 +54,24 @@ class Quiz extends Component {
       let newCount = this.state.count
       newCount--
       this.setState({ count: newCount})
+      let random = getRandomInt(0, this.state.count);
+      this.setState({ random: random})
+  }
+
+  NextQuestion = () => {
+    let count = this.state.count
+    let random = getRandomInt(0, count);
+    this.setState({ random: random})
   }
 
   componentDidMount() {
     const decks = this.props.decks;
     const title = this.props.navigation.state.params.title;
     const deck = getDeck(title, decks);
+    const length = deck[0].questions.length;
+    let random = getRandomInt(0, length);
     this.setState({ count: deck[0].questions.length})
+    this.setState({ random: random})
   }
 
   render() {
@@ -67,8 +79,9 @@ class Quiz extends Component {
     const title = this.props.navigation.state.params.title;
     const deck = getDeck(title, decks);
     const length = deck[0].questions.length;
-    let random = getRandomInt(0, length);
-    console.log(this.state.count)
+    const random = this.state.random
+    console.log(deck[0].questions[random].question,deck[0].questions[random].answer)
+    console.log(this.state)
 
     return (
       <View style={styles.single}>
