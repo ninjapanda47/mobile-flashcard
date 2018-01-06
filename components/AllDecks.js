@@ -1,80 +1,82 @@
 import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from "react-native";
-import { white, gray, black } from '../utils/colors';
-import { getDecks } from '../utils/helpers'
-import { connect } from 'react-redux';
-import { receiveDecks } from '../actions';
-
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  FlatList
+} from "react-native";
+import { white, gray, black } from "../utils/colors";
+import { getDecks } from "../utils/helpers";
+import { connect } from "react-redux";
+import { receiveDecks } from "../actions";
 
 class AllDecks extends Component {
-
-  componentDidMount () {
-    const { dispatch } = this.props
-    getDecks().then((result) => dispatch(receiveDecks(result), console.log(result)))  
+  componentDidMount() {
+    const { dispatch } = this.props;
+    getDecks().then(result =>
+      dispatch(receiveDecks(result), console.log(result))
+    );
   }
 
-  render() {
+  _keyExtractor = (item, index) => item.title;
 
-    const { decks } = this.props
+  render() {
+    const { decks } = this.props;
 
     return (
-      <ScrollView contentContainerStyle={styles.allDecks}>
-      {decks.map(deck => (
-        <TouchableOpacity key={deck.title}
-        onPress={() => this.props.navigation.navigate(
-          'Deck',
-          { title: deck.title, quantity: deck.questions.length}
-        )} >
-                <View style={styles.deckDisplay}>
-                <Text style={styles.title}>{deck.title}</Text>
-                <Text style={styles.desc}>{deck.questions.length} cards</Text>
-              </View>
-        </TouchableOpacity>
-      ))
-      }
-      </ScrollView>
+      <FlatList
+        keyExtractor={this._keyExtractor}
+        data={this.props.decks}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            key={item.title}
+            onPress={() =>
+              this.props.navigation.navigate("Deck", {
+                title: item.title,
+                quantity: item.questions.length
+              })
+            }
+          >
+            <View style={styles.deckDisplay}>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.desc}>{item.questions.length} cards</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
-    
-  allDecks: {
-    flex: 1,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: white,
-  },
   deckDisplay: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderStyle: 'solid',
+    alignItems: "center",
+    justifyContent: "center",
+    borderStyle: "solid",
     backgroundColor: white,
     borderBottomColor: black,
     borderBottomWidth: 2,
     height: 200,
-    width: 400,
+    width: 400
   },
   title: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: black,
-    textAlign: 'justify'
+    textAlign: "justify"
   },
   desc: {
-      fontSize: 20,
-      color: gray,
-      textAlign: 'justify'
+    fontSize: 20,
+    color: gray,
+    textAlign: "justify"
   }
 });
 
-function mapStateToProps (decks) {
-    return {
-        decks
-    }
+function mapStateToProps(decks) {
+  return {
+    decks
+  };
 }
 
-export default connect(
-    mapStateToProps
-  )(AllDecks)
+export default connect(mapStateToProps)(AllDecks);

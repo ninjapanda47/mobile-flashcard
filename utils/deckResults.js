@@ -36,7 +36,9 @@ export function setDummyData () {
 }
 
 export function deckResults (results){
-    return results === null
+ //   return setDummyData()
+   return results === null
     ? setDummyData()
    : JSON.parse(results)
+  
 }

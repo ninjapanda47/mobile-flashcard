@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { white, lightblue, green, gray, black } from "../utils/colors";
 import { addCardToDeck } from '../utils/helpers'
+import { connect } from "react-redux";
+import { receiveDecks } from '../actions';
 
 function SubmitBtn({ onPress }) {
   return (
@@ -25,10 +27,14 @@ class AddCard extends Component {
   };
 
   AddCard = () => {
+    const { dispatch } = this.props
       const card = {}
       card.question = this.state.question
       card.answer = this.state.answer
       addCardToDeck(this.state.title,card)
+      .then((data) => dispatch(receiveDecks(data), 
+      this.setState({question: '', answer: ''}))
+    )
   }
 
   render() {
@@ -100,4 +106,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddCard;
+function mapStateToProps(decks) {
+    return {
+      decks
+    };
+  }
+
+export default connect(mapStateToProps)(AddCard);
+

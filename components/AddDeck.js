@@ -7,8 +7,9 @@ import {
   TextInput
 } from "react-native";
 import { white, lightblue, green, gray, black } from "../utils/colors";
-import { saveDeckTitle } from '../utils/helpers'
+import { saveDeckTitle } from "../utils/helpers";
 import { connect } from "react-redux";
+import { receiveDecks } from "../actions";
 
 function SubmitBtn({ onPress }) {
   return (
@@ -24,14 +25,17 @@ class AddDeck extends Component {
   };
 
   AddDeck = () => {
-        const { dispatch } = this.props
-      saveDeckTitle(this.props.decks,this.state.text)
-      .then((data) => dispatch(receiveDecks(result), 
-      this.props.navigation.navigate('AddCard', { title: this.state.text})))
-  }
+    const { dispatch } = this.props;
+    saveDeckTitle(this.props.decks, this.state.text).then(data =>
+      dispatch(
+        receiveDecks(data),
+        this.props.navigation.navigate("AddCard", { title: this.state.text })
+      )
+    );
+    this.setState({ text: '' })
+  };
 
   render() {
-
     return (
       <View style={styles.single}>
         <View style={styles.deck}>
@@ -43,7 +47,7 @@ class AddDeck extends Component {
             maxLength={40}
             onChangeText={text => this.setState({ text })}
           />
-          <SubmitBtn onPress={this.AddDeck}/>
+          <SubmitBtn onPress={this.AddDeck} />
         </View>
       </View>
     );
@@ -76,11 +80,11 @@ const styles = StyleSheet.create({
     width: 250,
     marginTop: 30,
     marginBottom: 15,
-    borderStyle: 'solid',
+    borderStyle: "solid",
     borderWidth: 1,
     borderColor: black,
-    borderRadius: 7, 
-    padding: 10,   
+    borderRadius: 7,
+    padding: 10,
     textAlign: "center"
   },
   submitBtn: {
@@ -101,11 +105,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(decks) {
-    return {
-      decks
-    };
-  }
-  
+  return {
+    decks
+  };
+}
+
 export default connect(mapStateToProps)(AddDeck);
-
-
