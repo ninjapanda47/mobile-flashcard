@@ -20,11 +20,14 @@ function SubmitBtn({ onPress }) {
 
 class AddDeck extends Component {
   state = {
-    text: ""
+    text: ''
   };
 
   AddDeck = () => {
+        const { dispatch } = this.props
       saveDeckTitle(this.props.decks,this.state.text)
+      .then((data) => dispatch(receiveDecks(result), 
+      this.props.navigation.navigate('AddCard', { title: this.state.text})))
   }
 
   render() {

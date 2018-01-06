@@ -7,6 +7,7 @@ import {
   TextInput
 } from "react-native";
 import { white, lightblue, green, gray, black } from "../utils/colors";
+import { addCardToDeck } from '../utils/helpers'
 
 function SubmitBtn({ onPress }) {
   return (
@@ -18,11 +19,20 @@ function SubmitBtn({ onPress }) {
 
 class AddCard extends Component {
   state = {
+    title: this.props.navigation.state.params.title,
     question: '',
-    answer: ''
+    answer: '',
   };
 
+  AddCard = () => {
+      const card = {}
+      card.question = this.state.question
+      card.answer = this.state.answer
+      addCardToDeck(this.state.title,card)
+  }
+
   render() {
+
     return (
       <View style={styles.single}>
         <View style={styles.deck}>
@@ -40,7 +50,7 @@ class AddCard extends Component {
             maxLength={150}
             onChangeText={answer => this.setState({ answer })}
           />
-          <SubmitBtn />
+          <SubmitBtn onPress={this.AddCard}/>
         </View>
       </View>
     );

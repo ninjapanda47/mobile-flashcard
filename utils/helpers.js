@@ -23,8 +23,22 @@ export function saveDeckTitle(decks,title){
     decks.push(deck)
     AsyncStorage.setItem(DECKS_STORAGE_KEY,JSON.stringify(decks))
     .then((data) =>  AsyncStorage.getItem(DECKS_STORAGE_KEY)
-    .then((data) => console.log(data)))    
+    .then((data) => console.log(data)))   
 }
 //addCardToDeck: take in two arguments, title and card, and will add the card to the list of questions for the
-
+export function addCardToDeck(title,card){
+    let decks = []
+    let deck = {}
+    AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(data => {
+        decks = JSON.parse(data);
+        deck = decks.find(deck => deck.title === title);
+        deck.questions.push(card);
+        console.log(decks)
+      })
+ //   deck = decks.find(deck => deck.title === title),
+ //   console.log(deck),
+ //   deck.questions.push(card),
+ //   console.log(decks)
+}
 

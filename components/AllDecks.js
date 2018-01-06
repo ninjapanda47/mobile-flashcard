@@ -6,16 +6,11 @@ import { connect } from 'react-redux';
 import { receiveDecks } from '../actions';
 
 
-
 class AllDecks extends Component {
-
-  state = {
-
-  }
 
   componentDidMount () {
     const { dispatch } = this.props
-    getDecks().then((result) => dispatch(receiveDecks(result)))  
+    getDecks().then((result) => dispatch(receiveDecks(result), console.log(result)))  
   }
 
   render() {
