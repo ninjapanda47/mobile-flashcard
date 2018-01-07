@@ -36,7 +36,7 @@ export function addCardToDeck(title,card){
         deck = decks.find(deck => deck.title === title);
         deck.questions.push(card);
         console.log(decks)
-        AsyncStorage.setItem(DECKS_STORAGE_KEY,JSON.stringify(decks))
+        return AsyncStorage.setItem(DECKS_STORAGE_KEY,JSON.stringify(decks))
         .then((data) => AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then ( deckResults )
 
