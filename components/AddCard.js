@@ -48,6 +48,7 @@ class AddCard extends Component {
             editable={true}
             maxLength={150}
             onChangeText={question => this.setState({ question })}
+            value={this.state.question}
           />
           <TextInput
             style={styles.input}
@@ -55,6 +56,7 @@ class AddCard extends Component {
             editable={true}
             maxLength={150}
             onChangeText={answer => this.setState({ answer })}
+            value={this.state.answer}
           />
           <SubmitBtn onPress={this.AddCard}/>
         </View>

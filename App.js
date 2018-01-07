@@ -5,6 +5,7 @@ import AddDeck from "./components/AddDeck";
 import AddCard from "./components/AddCard";
 import Deck from "./components/Deck";
 import Quiz from "./components/Quiz";
+import Result from "./components/Result";
 import { TabNavigator, StackNavigator } from "react-navigation";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { black, white, blue } from "./utils/colors";
@@ -85,6 +86,16 @@ const MainNavigator = StackNavigator({
     screen: Quiz,
     navigationOptions: {
       title: 'Quiz',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: black,
+      }
+    }
+  },
+  Result: {
+    screen: Result,
+    navigationOptions: {
+      title: 'Result',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: black,

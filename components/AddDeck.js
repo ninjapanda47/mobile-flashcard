@@ -46,6 +46,7 @@ class AddDeck extends Component {
             editable={true}
             maxLength={40}
             onChangeText={text => this.setState({ text })}
+            value={this.state.text}
           />
           <SubmitBtn onPress={this.AddDeck} />
         </View>
