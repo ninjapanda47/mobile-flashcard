@@ -24,12 +24,13 @@ class AddDeck extends Component {
     text: ""
   };
 
-  AddDeck = () => {
+  Deck = () => {
     const { dispatch } = this.props;
-    saveDeckTitle(this.props.decks, this.state.text).then(data =>
+    const title = this.state.text
+    saveDeckTitle(this.props.decks, title).then(data =>
       dispatch(
         receiveDecks(data),
-        this.props.navigation.navigate("AddCard", { title: this.state.text })
+        this.props.navigation.navigate("Deck", { title: title })
       )
     );
     this.setState({ text: "" });
@@ -48,7 +49,7 @@ class AddDeck extends Component {
             onChangeText={text => this.setState({ text })}
             value={this.state.text}
           />
-          <SubmitBtn onPress={this.AddDeck} />
+          <SubmitBtn onPress={this.Deck} />
         </View>
       </View>
     );

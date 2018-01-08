@@ -28,9 +28,9 @@ class Deck extends Component {
   };
 
   componentDidMount() {
-    const decks = this.props.decks;
     const title = this.props.navigation.state.params.title;
     const deck = getDeck(title).then(data => {
+      console.log(data)
       const deck = data;
       const quantity = deck.questions.length;
       this.setState({

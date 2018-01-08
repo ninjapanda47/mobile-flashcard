@@ -32,8 +32,11 @@ class AddCard extends Component {
     card.question = this.state.question;
     card.answer = this.state.answer;
     addCardToDeck(this.state.title, card).then(data =>
-      dispatch(receiveDecks(data), this.setState({ question: "", answer: "" }))
-    );
+      dispatch(receiveDecks(data), this.setState({ question: "", answer: "" }), 
+      this.props.navigation.navigate("Deck", {
+        title: this.state.title
+      })
+    ))
   };
 
   render() {

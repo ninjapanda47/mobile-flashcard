@@ -34,7 +34,6 @@ class AllDecks extends Component {
             onPress={() =>
               this.props.navigation.navigate("Deck", {
                 title: item.title,
-                quantity: item.questions.length
               })
             }
           >

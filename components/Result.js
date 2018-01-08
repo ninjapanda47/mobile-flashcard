@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 function NewBtn({ onPress }) {
   return (
     <TouchableOpacity style={styles.newBtn} onPress={onPress}>
-      <Text style={styles.btnText}>New deck</Text>
+      <Text style={styles.btnText}>Back to Deck</Text>
     </TouchableOpacity>
   );
 }
@@ -14,14 +14,16 @@ function NewBtn({ onPress }) {
 function ResetBtn({ onPress }) {
   return (
     <TouchableOpacity style={styles.resetBtn} onPress={onPress}>
-      <Text style={styles.btnText}>Start Over</Text>
+      <Text style={styles.btnText}>Restart Quiz</Text>
     </TouchableOpacity>
   );
 }
 
 class Result extends Component {
-  AllDecks = () => {
-    this.props.navigation.navigate("AllDecks");
+  Deck = () => {
+    this.props.navigation.navigate("Deck", {
+        title: this.props.navigation.state.params.title
+      });
   };
 
   ResetQuiz = () => {
@@ -40,7 +42,7 @@ class Result extends Component {
           <Text style={styles.score}>
             {this.props.navigation.state.params.score}
           </Text>
-          <NewBtn onPress={this.AllDecks} />
+          <NewBtn onPress={this.Deck} />
           <ResetBtn onPress={this.ResetQuiz} />
         </View>
       </View>
