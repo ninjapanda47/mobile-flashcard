@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { white, red, green, gray, black } from "../utils/colors";
 import { connect } from "react-redux";
-import { getDecks, getDeck } from "../utils/helpers";
+import {
+  getDeck,
+  clearLocalNotification,
+  setLocalNotification
+} from "../utils/helpers";
 import { receiveDecks } from "../actions";
 
 function getRandomInt(min, max) {
@@ -102,6 +106,7 @@ class Quiz extends Component {
         score: score,
         title: this.state.title
       });
+      clearLocalNotification().then(setLocalNotification);
     }
   };
 

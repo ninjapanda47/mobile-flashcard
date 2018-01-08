@@ -1,6 +1,9 @@
 import React from "react";
 import { View, StyleSheet, AsyncStorage } from "react-native";
 import { deckResults, DECKS_STORAGE_KEY } from "./deckResults";
+import { Notifications, Permissions } from 'expo'
+
+const NOTIFICATION_KEY = 'mobile-flashcard:notifications'
 
 //getDecks: return all of the decks along with their titles, questions, and answers.
 export function getDecks() {
@@ -16,7 +19,6 @@ export function getDeck( title ){
         return deck
     })
 }
-
 
 //saveDeckTitle: take in a single title argument and add it to the decks.
 export function saveDeckTitle(decks, title) {
@@ -40,4 +42,51 @@ export function addCardToDeck(title, card) {
       data => AsyncStorage.getItem(DECKS_STORAGE_KEY).then(deckResults)
     );
   });
+}
+
+//set notification
+
+export function clearLocalNotification(){
+    return AsyncStorage.removeItem(NOTIFICATION_KEY)
+    .then(Notifications.cancelAllScheduledNotificationsAsync)
+}
+
+function createNotification(){
+    return {
+        title: 'Study Reminder',
+        body: "Remember to study today!",
+        ios: {
+          sound: true,
+        }
+    }
+}
+
+export function setLocalNotification(){
+    AsyncStorage.getItem(NOTIFICATION_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data === null) {
+        Permissions.askAsync(Permissions.NOTIFICATIONS)
+          .then(({ status }) => {
+            if (status === 'granted') {
+              Notifications.cancelAllScheduledNotificationsAsync()
+
+              let tomorrow = new Date()
+              tomorrow.setDate(tomorrow.getDate() + 1)
+              tomorrow.setHours(20)
+              tomorrow.setMinutes(0)
+
+              Notifications.scheduleLocalNotificationAsync(
+                createNotification(),
+                {
+                  time: tomorrow,
+                  repeat: 'day',
+                }
+              )
+
+              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+            }
+          })
+      }
+    })
 }
