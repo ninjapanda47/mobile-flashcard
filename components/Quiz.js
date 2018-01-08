@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { white, red, green, gray, black } from "../utils/colors";
 import { connect } from "react-redux";
-import { getDeck } from "../utils/helpers";
+import { getDecks, getDeck } from "../utils/helpers";
+import { receiveDecks } from "../actions";
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -33,6 +34,7 @@ function Score(correct, length) {
 
 class Quiz extends Component {
   state = {
+    title: "",
     deck: [],
     question: "",
     answer: "",
@@ -62,11 +64,14 @@ class Quiz extends Component {
   Correct = () => {
     let score = this.state.correct;
     score++;
-    this.setState({
-       correct: score
-    }, () => {
+    this.setState(
+      {
+        correct: score
+      },
+      () => {
         this.NextQuestion();
-    });
+      }
+    );
   };
 
   Incorrect = () => {
@@ -79,10 +84,10 @@ class Quiz extends Component {
     const deck = this.state.deck;
     if (newCount !== 0) {
       let random = this.state.random;
-      deck[0].questions.splice(random, 1);
+      deck.questions.splice(random, 1);
       random = getRandomInt(0, newCount);
-      const question = deck[0].questions[random].question;
-      const answer = deck[0].questions[random].answer;
+      const question = deck.questions[random].question;
+      const answer = deck.questions[random].answer;
       this.setState({
         count: newCount,
         deck: deck,
@@ -91,29 +96,32 @@ class Quiz extends Component {
         random: random
       });
       this.ShowandHideAnswer();
-      console.log(this.state);
     } else {
-      const score = Score(this.state.correct,this.state.length)
-      this.props.navigation.navigate("Result", {score: score});
+      const score = Score(this.state.correct, this.state.length);
+      this.props.navigation.navigate("Result", {
+        score: score,
+        title: this.state.title
+      });
     }
   };
 
   componentDidMount() {
-    const decks = this.props.decks;
     const title = this.props.navigation.state.params.title;
-    const deck = getDeck(title, decks);
-    console.log(deck);
-    const length = deck[0].questions.length;
-    let random = getRandomInt(0, length);
-    const question = deck[0].questions[random].question;
-    const answer = deck[0].questions[random].answer;
-    this.setState({
-      length: length,
-      count: deck[0].questions.length,
-      random: random,
-      deck: deck,
-      question: question,
-      answer: answer
+    const deck = getDeck(title).then(data => {
+      const deck = data;
+      const length = deck.questions.length;
+      let random = getRandomInt(0, length);
+      const question = deck.questions[random].question;
+      const answer = deck.questions[random].answer;
+      this.setState({
+        title: title,
+        length: length,
+        count: deck.questions.length,
+        random: random,
+        deck: deck,
+        question: question,
+        answer: answer
+      });
     });
   }
 

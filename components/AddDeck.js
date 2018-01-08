@@ -21,7 +21,7 @@ function SubmitBtn({ onPress }) {
 
 class AddDeck extends Component {
   state = {
-    text: ''
+    text: ""
   };
 
   AddDeck = () => {
@@ -32,7 +32,7 @@ class AddDeck extends Component {
         this.props.navigation.navigate("AddCard", { title: this.state.text })
       )
     );
-    this.setState({ text: '' })
+    this.setState({ text: "" });
   };
 
   render() {

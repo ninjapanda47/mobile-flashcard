@@ -7,9 +7,9 @@ import {
   TextInput
 } from "react-native";
 import { white, lightblue, green, gray, black } from "../utils/colors";
-import { addCardToDeck } from '../utils/helpers'
+import { addCardToDeck } from "../utils/helpers";
 import { connect } from "react-redux";
-import { receiveDecks } from '../actions';
+import { receiveDecks } from "../actions";
 
 function SubmitBtn({ onPress }) {
   return (
@@ -22,23 +22,21 @@ function SubmitBtn({ onPress }) {
 class AddCard extends Component {
   state = {
     title: this.props.navigation.state.params.title,
-    question: '',
-    answer: '',
+    question: "",
+    answer: ""
   };
 
   AddCard = () => {
-    const { dispatch } = this.props
-      const card = {}
-      card.question = this.state.question
-      card.answer = this.state.answer
-      addCardToDeck(this.state.title,card)
-      .then((data) => dispatch(receiveDecks(data), 
-      this.setState({question: '', answer: ''}))
-    )
-  }
+    const { dispatch } = this.props;
+    const card = {};
+    card.question = this.state.question;
+    card.answer = this.state.answer;
+    addCardToDeck(this.state.title, card).then(data =>
+      dispatch(receiveDecks(data), this.setState({ question: "", answer: "" }))
+    );
+  };
 
   render() {
-
     return (
       <View style={styles.single}>
         <View style={styles.deck}>
@@ -58,7 +56,7 @@ class AddCard extends Component {
             onChangeText={answer => this.setState({ answer })}
             value={this.state.answer}
           />
-          <SubmitBtn onPress={this.AddCard}/>
+          <SubmitBtn onPress={this.AddCard} />
         </View>
       </View>
     );
@@ -109,10 +107,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(decks) {
-    return {
-      decks
-    };
-  }
+  return {
+    decks
+  };
+}
 
 export default connect(mapStateToProps)(AddCard);
-

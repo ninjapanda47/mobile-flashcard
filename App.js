@@ -10,11 +10,10 @@ import { TabNavigator, StackNavigator } from "react-navigation";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { black, white, blue } from "./utils/colors";
 import { createStore } from "redux";
-import devToolsEnhancer from 'remote-redux-devtools';
+import devToolsEnhancer from "remote-redux-devtools";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
-
 
 const Tabs = TabNavigator(
   {
@@ -39,7 +38,7 @@ const Tabs = TabNavigator(
       activeTintColor: Platform.OS === "ios" ? black : white,
       labelStyle: {
         fontSize: 20,
-        fontWeight:'bold'
+        fontWeight: "bold"
       },
       style: {
         height: 56,
@@ -60,16 +59,15 @@ const Tabs = TabNavigator(
 const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs,
-    navigationOptions: {
-    }
+    navigationOptions: {}
   },
   Deck: {
     screen: Deck,
     navigationOptions: {
-      title: 'Deck',
+      title: "Deck",
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: black,
+        backgroundColor: black
       }
     }
   },
@@ -78,27 +76,27 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: black,
+        backgroundColor: black
       }
     }
   },
   Quiz: {
     screen: Quiz,
     navigationOptions: {
-      title: 'Quiz',
+      title: "Quiz",
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: black,
+        backgroundColor: black
       }
     }
   },
   Result: {
     screen: Result,
     navigationOptions: {
-      title: 'Result',
+      title: "Result",
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: black,
+        backgroundColor: black
       }
     }
   }
