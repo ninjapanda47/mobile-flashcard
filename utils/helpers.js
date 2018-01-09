@@ -51,15 +51,13 @@ export function clearLocalNotification(){
     .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
-function createNotification(){
-    return {
-        title: 'Study Reminder',
-        body: "Remember to study today!",
-        ios: {
-          sound: true,
-        }
+const createNotification = () =>  ({
+    title: 'Study Reminder!',
+    body: "Remember to study today!",
+    ios: {
+      sound: true,
     }
-}
+})
 
 export function setLocalNotification(){
     AsyncStorage.getItem(NOTIFICATION_KEY)

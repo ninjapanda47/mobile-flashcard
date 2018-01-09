@@ -14,7 +14,7 @@ import devToolsEnhancer from "remote-redux-devtools";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
-import { setLocalNotification } from './utils/helpers'
+import { setLocalNotification } from "./utils/helpers";
 
 const Tabs = TabNavigator(
   {
@@ -107,9 +107,9 @@ const store = createStore(reducer, devToolsEnhancer());
 
 export default class App extends React.Component {
   componentDidMount() {
-    setLocalNotification()
+    setLocalNotification();
   }
-  
+
   render() {
     return (
       <Provider store={store}>

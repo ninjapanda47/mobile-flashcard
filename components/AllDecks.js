@@ -14,9 +14,7 @@ import { receiveDecks } from "../actions";
 class AllDecks extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    getDecks().then(result =>
-      dispatch(receiveDecks(result), console.log(result))
-    );
+    getDecks().then(result => dispatch(receiveDecks(result)));
   }
 
   _keyExtractor = (item, index) => item.title;
@@ -33,7 +31,7 @@ class AllDecks extends Component {
             key={item.title}
             onPress={() =>
               this.props.navigation.navigate("Deck", {
-                title: item.title,
+                title: item.title
               })
             }
           >
@@ -72,10 +70,6 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(decks) {
-  return {
-    decks
-  };
-}
+const mapStateToProps = decks => ({ decks });
 
 export default connect(mapStateToProps)(AllDecks);
